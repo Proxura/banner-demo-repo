@@ -1,0 +1,36 @@
+<!-- BANNER-FRESH-REALLY -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ReBuk -- Banner Clean</title>
+  <style>
+    :root{
+      --navy:#0D1826;
+      --ocean:#102537;
+      --brand-green:#00E27A;
+      --brand-mint:#D6FFF0;
+      --hero-h:210px;
+    }
+    html,body{height:100%}
+    body{margin:0;background:#fff;color:#0f172a;
+         font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+    .hero{
+      position:relative;height:var(--hero-h);overflow:hidden;
+      background:linear-gradient(180deg,var(--navy),var(--ocean) 65%);
+    }
+    #hero3d{position:absolute;inset:0;width:100%;height:100%;
+            display:block;pointer-events:none}
+    main{min-height:1000px;background:#fff}
+  </style>
+</head>
+<body>
+  <div class="hero"><canvas id="hero3d"></canvas></div>
+  <main></main>
+
+  <!-- Local Three.js + banner code -->
+  <script defer src="./libs/three.min.js"></script>
+  <script defer src="./banner.js"></script>
+</body>
+</html>

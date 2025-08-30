@@ -1,0 +1,9 @@
+{
+  "name": "banner-demo",
+  "version": "1.0.0",
+  "description": "Clean banner demo with Three.js",
+  "scripts": {
+    "start": "npx http-server public -p 3000 -c-1"
+  },
+  "dependencies": {}
+}
