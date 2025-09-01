@@ -1,11 +1,12 @@
+/* global THREE */
 console.log('BANNER JS LOADED v3');
 
 (function(){
   const el = document.getElementById('hero3d');
-  if(!el){ console.error('no #hero3d'); return; }
-  if(!window.THREE){ console.error('THREE missing'); return; }
+  if (!el) { console.error('no #hero3d'); return; }
+  if (!window.THREE) { console.error('THREE missing'); return; }
 
-  const renderer = new THREE.WebGLRenderer({canvas: el, antialias:true, alpha:true});
+  const renderer = new THREE.WebGLRenderer({ canvas: el, antialias: true, alpha: true });
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   renderer.setPixelRatio(dpr);
 
@@ -14,7 +15,7 @@ console.log('BANNER JS LOADED v3');
   camera.position.z = 5;
 
   const geo = new THREE.TorusKnotGeometry(0.8, 0.28, 180, 32);
-  const mat = new THREE.MeshBasicMaterial({color: 0x00E27A, wireframe:true});
+  const mat = new THREE.MeshBasicMaterial({ color: 0x00E27A, wireframe: true });
   const knot = new THREE.Mesh(geo, mat);
   scene.add(knot);
 
