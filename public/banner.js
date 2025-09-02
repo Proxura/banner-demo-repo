@@ -1,5 +1,5 @@
 /* global THREE */
-console.log('[banner] ribbons+particles v1');
+console.log('[banner] ribbons+particles v1 – dev2');
 
 (function () {
   const el = document.getElementById('hero3d');
