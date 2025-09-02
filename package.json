@@ -1,12 +1,14 @@
 {
-  "name": "banner-demo",
-  "version": "1.0.0",
-  "description": "Clean banner demo with Three.js",
-  "scripts": {
-    "start": "npx http-server public -p 3000 -c-1",
-    "dev": "http-server public -p 3000 --cors"
-  },
+  "name": "rebuk-banner",
+  "private": true,
+  "type": "module",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "vite": "^5.3.5"
+  },
+  "scripts": {
+    "dev": "vite --root public --strictPort --port 5173",
+    "dev:3000": "vite --root public --strictPort --port 3000",
+    "build": "vite build --root public --outDir dist",
+    "preview": "vite preview --strictPort --port 5173"
   }
 }
