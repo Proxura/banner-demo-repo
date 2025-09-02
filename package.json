@@ -5,10 +5,8 @@
   "devDependencies": {
     "vite": "^5.3.5"
   },
-  "scripts": {
-    "dev": "vite --root public --strictPort --port 5173",
-    "dev:3000": "vite --root public --strictPort --port 3000",
-    "build": "vite build --root public --outDir dist",
-    "preview": "vite preview --strictPort --port 5173"
-  }
+ "scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview"
 }
