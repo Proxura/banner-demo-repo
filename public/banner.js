@@ -6,7 +6,9 @@ console.log('[banner] ribbons+particles v1 – dev2');
   if (!el || !window.THREE) return;
 
   // ------ Renderer (crisp, no blur) ------
-  const renderer = new THREE.WebGLRenderer({ canvas: el, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  const renderer = new THREE.WebGLRenderer({
+    canvas: el, antialias: true, alpha: true, powerPreference: 'high-performance'
+  });
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   renderer.setPixelRatio(dpr);
   renderer.setClearColor(0x000000, 0);
@@ -25,17 +27,17 @@ console.log('[banner] ribbons+particles v1 – dev2');
   const GREEN = new THREE.Color((css.getPropertyValue('--brand-green')||'#00E27A').trim());
   const MINT  = new THREE.Color((css.getPropertyValue('--brand-mint')||'#D6FFF0').trim());
 
-  // ------ Subtle gradient plane behind (no fog) ------
+  // ------ Subtle gradient plane (no fog) ------
   const bgGeo = new THREE.PlaneGeometry(12, 6);
   const bgMat = new THREE.ShaderMaterial({
     uniforms: { c1: { value: NAVY }, c2: { value: OCEAN } },
     vertexShader: `
-      precision mediump float;
+      precision highp float;
       varying vec2 vUv;
       void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }
     `,
     fragmentShader: `
-      precision mediump float;
+      precision highp float;
       varying vec2 vUv; uniform vec3 c1; uniform vec3 c2;
       void main(){
         float g = smoothstep(0.0, 1.0, vUv.y);
@@ -60,7 +62,7 @@ console.log('[banner] ribbons+particles v1 – dev2');
         uWidth: { value: width }
       },
       vertexShader: `
-        precision mediump float;
+        precision highp float;
         uniform float uTime; uniform float uAmp;
         varying float vMask;
         void main(){
@@ -72,7 +74,7 @@ console.log('[banner] ribbons+particles v1 – dev2');
         }
       `,
       fragmentShader: `
-        precision mediump float;
+        precision highp float;
         uniform vec3 uColor; varying float vMask;
         void main(){
           float a = clamp(vMask, 0.0, 1.0);
@@ -101,10 +103,10 @@ console.log('[banner] ribbons+particles v1 – dev2');
   const pos   = new Float32Array(DOTS * 3);
   const aSize = new Float32Array(DOTS);
   for (let i = 0; i < DOTS; i++) {
-    pos[i*3+0] = (Math.random() - 0.5) * 10.5; // x
-    pos[i*3+1] = (Math.random() - 0.5) * 3.8;  // y
-    pos[i*3+2] = Math.random() * -0.2;         // slight depth back
-    aSize[i]   = 1.0 + Math.random() * 2.0;    // base (scaled in shader)
+    pos[i*3+0] = (Math.random() - 0.5) * 10.5;
+    pos[i*3+1] = (Math.random() - 0.5) * 3.8;
+    pos[i*3+2] = Math.random() * -0.2;
+    aSize[i]   = 1.0 + Math.random() * 2.0;
   }
   gDots.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   gDots.setAttribute('aSize',    new THREE.BufferAttribute(aSize, 1));
@@ -116,30 +118,28 @@ console.log('[banner] ribbons+particles v1 – dev2');
       uTime:  { value: 0.0 }
     },
     vertexShader: `
-      precision mediump float;
+      precision highp float;
       attribute float aSize;
       uniform float uDPR;
       uniform float uTime;
       varying float vAlpha;
       void main(){
         vec3 p = position;
-        // subtle drift
         p.x += 0.03 * sin(uTime * 0.25 + p.y * 0.7);
         p.y += 0.03 * cos(uTime * 0.22 + p.x * 0.6);
-
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
         gl_Position = projectionMatrix * mv;
-        gl_PointSize = aSize * 3.0 * uDPR / max(0.1, -mv.z); // crisp points
+        gl_PointSize = aSize * 3.0 * uDPR / max(0.1, -mv.z);
         vAlpha = 0.8;
       }
     `,
     fragmentShader: `
-      precision mediump float;
+      precision highp float;
       uniform vec3 uColor;
       varying float vAlpha;
       void main(){
         vec2 uv = gl_PointCoord - 0.5;
-        float m = smoothstep(0.5, 0.0, length(uv)); // soft round sprite
+        float m = smoothstep(0.5, 0.0, length(uv));
         gl_FragColor = vec4(uColor * (0.6 + 0.4 * m), m * vAlpha);
       }
     `,
@@ -173,7 +173,6 @@ console.log('[banner] ribbons+particles v1 – dev2');
     ribbonBack.mat.uniforms.uTime.value  = t * ribbonBack.speed;
     dotMat.uniforms.uTime.value = t;
 
-    // subtle camera sway
     camera.position.x = Math.sin(t * 0.07) * 0.05;
     camera.position.y = Math.cos(t * 0.06) * 0.03;
     camera.lookAt(0, 0, 0);
